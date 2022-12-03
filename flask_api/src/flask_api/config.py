@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 
 
-HERE = Path(__file__).parent
+HERE = Path(__file__).parent.parent.parent
 SQLITE_DEV = "sqlite:///" + str(HERE / "flask_api_dev.db")
 SQLITE_TEST = "sqlite:///" + str(HERE / "flask_api_test.db")
 SQLITE_PROD = "sqlite:///" + str(HERE / "flask_api_prod.db")
