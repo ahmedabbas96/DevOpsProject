@@ -6,14 +6,15 @@ import jwt
 from flask import current_app
 from sqlalchemy.ext.hybrid import hybrid_property
 
-from flask_api import db, bcrypt
-from flask_api.util.datetime_util import (
+from src.flask_api import db, bcrypt
+from src.flask_api.models.token_blacklist import BlacklistedToken
+from src.flask_api.util.datetime_util import (
     utc_now,
     get_local_utcoffset,
     make_tzaware,
     localized_dt_string,
 )
-from flask_api.util.result import Result
+from src.flask_api.util.result import Result
 
 
 class User(db.Model):
@@ -82,6 +83,9 @@ class User(db.Model):
             error = "Invalid token. Please log in again."
             return Result.Fail(error)
 
+        if BlacklistedToken.check_blacklist(access_token):
+            error = "Token blacklisted. Please log in again."
+            return Result.Fail(error)
         user_dict = dict(
             public_id=payload["sub"],
             admin=payload["admin"],

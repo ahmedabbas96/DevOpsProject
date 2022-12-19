@@ -3,8 +3,8 @@ from functools import wraps
 
 from flask import request
 
-from flask_api.api.exceptions import ApiUnauthorized, ApiForbidden
-from flask_api.models.user import User
+from src.flask_api.api.exceptions import ApiUnauthorized, ApiForbidden
+from src.flask_api.models.user import User
 
 
 def token_required(f):

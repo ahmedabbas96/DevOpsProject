@@ -1,7 +1,7 @@
 """Unit tests for api.auth_register API endpoint."""
 from http import HTTPStatus
 
-from flask_api.models.user import User
+from src.flask_api.models.user import User
 from tests.util import EMAIL, register_user
 
 SUCCESS = "successfully registered"

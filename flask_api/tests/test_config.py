@@ -1,8 +1,8 @@
 """Unit tests for environment config settings."""
 import os
 
-from flask_api import create_app
-from flask_api.config import SQLITE_DEV, SQLITE_PROD, SQLITE_TEST
+from src.flask_api import create_app
+from src.flask_api.config import SQLITE_DEV, SQLITE_PROD, SQLITE_TEST
 
 
 def test_config_development():

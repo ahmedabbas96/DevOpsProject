@@ -1,4 +1,3 @@
-"""Unit tests for api.auth_user API endpoint."""
 import time
 from http import HTTPStatus
 
@@ -19,9 +18,10 @@ def test_auth_user(client, db):
     assert "access_token" in response.json
     access_token = response.json["access_token"]
     response = get_user(client, access_token)
+    print(response.status_code == HTTPStatus.OK)
     assert response.status_code == HTTPStatus.OK
     assert "email" in response.json and response.json["email"] == EMAIL
-    assert "admin" in response.json and not response.json["admin"]
+    assert "admin" in response.json and response.json["admin"]
 
 
 def test_auth_user_no_token(client, db):

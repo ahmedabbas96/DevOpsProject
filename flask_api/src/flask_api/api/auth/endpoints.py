@@ -3,11 +3,12 @@ from http import HTTPStatus
 
 from flask_restx import Namespace, Resource
 
-from flask_api.api.auth.dto import auth_reqparser, user_model
-from flask_api.api.auth.business import (
+from src.flask_api.api.auth.dto import auth_reqparser, user_model
+from src.flask_api.api.auth.business import (
     process_registration_request,
     process_login_request,
     get_logged_in_user,
+    process_logout_request,
 )
 
 auth_ns = Namespace(name="auth", validate=True)
@@ -60,3 +61,17 @@ class GetUser(Resource):
     def get(self):
         """Validate access token and return user info."""
         return get_logged_in_user()
+
+
+@auth_ns.route("/logout", endpoint="auth_logout")
+class LogoutUser(Resource):
+    """Handles HTTP requests to URL: /auth/logout."""
+
+    @auth_ns.doc(security="Bearer")
+    @auth_ns.response(int(HTTPStatus.OK), "Log out succeeded, token is no longer valid.")
+    @auth_ns.response(int(HTTPStatus.BAD_REQUEST), "Validation error.")
+    @auth_ns.response(int(HTTPStatus.UNAUTHORIZED), "Token is invalid or expired.")
+    @auth_ns.response(int(HTTPStatus.INTERNAL_SERVER_ERROR), "Internal server error.")
+    def post(self):
+        """Add token to blacklist, deauthenticating the current user."""
+        return process_logout_request()

@@ -4,8 +4,8 @@ import json
 import time
 from base64 import urlsafe_b64encode, urlsafe_b64decode
 
-from flask_api.models.user import User
-from tests.util import EMAIL, PASSWORD, BAD_REQUEST, EMAIL_ALREADY_EXISTS, register_user
+from src.flask_api.models.user import User
+from tests.util import BAD_REQUEST, register_user
 
 
 def test_encode_access_token(user):
@@ -48,20 +48,6 @@ def test_decode_access_token_invalid(user):
     result = User.decode_access_token(access_token_mod)
     assert not result.success
     assert result.error == "Invalid token. Please log in again."
-
-
-def test_auth_register_email_already_registered(client, db):
-    user = User(email=EMAIL, password=PASSWORD)
-    db.session.add(user)
-    db.session.commit()
-    response = register_user(client)
-    assert response.status_code == HTTPStatus.CONFLICT
-    assert (
-        "message" in response.json and response.json["message"] == EMAIL_ALREADY_EXISTS
-    )
-    assert "token_type" not in response.json
-    assert "expires_in" not in response.json
-    assert "access_token" not in response.json
 
 
 def test_auth_register_invalid_email(client):

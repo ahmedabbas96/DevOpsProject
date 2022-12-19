@@ -1,10 +1,8 @@
-"""Shared functions and constants for unit tests."""
 from flask import url_for
 
 EMAIL = "new_user@email.com"
 PASSWORD = "test1234"
 BAD_REQUEST = "Input payload validation failed"
-EMAIL_ALREADY_EXISTS = f"{EMAIL} is already registered"
 WWW_AUTH_NO_TOKEN = 'Bearer realm="registered_users@mydomain.com"'
 
 
@@ -27,4 +25,10 @@ def login_user(test_client, email=EMAIL, password=PASSWORD):
 def get_user(test_client, access_token):
     return test_client.get(
         url_for("api.auth_user"), headers={"Authorization": f"Bearer {access_token}"}
+    )
+
+
+def logout_user(test_client, access_token):
+    return test_client.post(
+        url_for("api.auth_logout"), headers={"Authorization": f"Bearer {access_token}"}
     )

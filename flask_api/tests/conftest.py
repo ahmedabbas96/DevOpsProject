@@ -1,9 +1,9 @@
 """Global pytest fixtures."""
 import pytest
 
-from flask_api import create_app
-from flask_api import db as database
-from flask_api.models.user import User
+from src.flask_api import create_app
+from src.flask_api import db as database
+from src.flask_api.models.user import User
 from tests.util import EMAIL, PASSWORD
 
 
