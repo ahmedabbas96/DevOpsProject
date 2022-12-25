@@ -1,0 +1,7 @@
+{
+    "python.analysis.extraPaths": [
+        "./flask_api/src",
+        "./flask_api/src/api",
+        "./flask_api"
+    ]
+}
